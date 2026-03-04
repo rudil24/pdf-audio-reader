@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Audio Reader</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>PDF Audio Reader</h1>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <label class="file-btn">
+        Open PDF
+        <input type="file" id="fileInput" accept=".pdf" hidden>
+      </label>
+      <div class="voice-wrap">
+        <label for="voiceSelect">Voice</label>
+        <select id="voiceSelect"></select>
+      </div>
+    </div>
+
+    <div class="viewer">
+      <div id="emptyState">Open a PDF to begin</div>
+      <canvas id="pdfCanvas" style="display:none;"></canvas>
+    </div>
+
+    <div class="controls">
+      <span id="pageCounter" class="page-counter"></span>
+      <div class="buttons">
+        <button id="playPauseBtn" disabled>Play</button>
+        <button id="nextPageBtn" disabled>Next Page →</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

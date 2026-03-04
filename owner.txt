@@ -1,0 +1,26 @@
+Build a webapp that takes a PDF file, identifies the text, and converts it into speech audio.
+Use PERN or Python or a combo, i don't care which, with these constraints:
+* must be "free" Text-to-speech (if token limits, must be enough on a free plan for 2 concurrent users to translate a 2500 word ~ 10-page PDF in concurrent sessions without it "breaking".)
+* must deploy and run in github pages (so no server side dependencies)
+* clean "open local file" interface 
+* player needs to view the page as its being read, and user needs to be able to "pause" (toggle) and "go to next page"
+* stretch goal: "highlighting" the text it's reading as it reads it while showing the pdf or html document is a nice to have
+* super stretch goal: read pdf OR html from a user-entered url.
+
+
+
+You can choose your own Text-To-Speech (TTS) API. 
+* Voice choices is a bonus!
+
+here are some you can consider:
+
+http://www.ispeech.org/api/#introduction
+
+https://cloud.google.com/text-to-speech/docs/basics
+
+https://aws.amazon.com/polly/
+
+https://elevenlabs.io
+
+whichever one you choose, walk me through getting the developer API key.
+

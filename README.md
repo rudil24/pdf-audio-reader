@@ -1,5 +1,7 @@
 # PDF Audio Reader
 
+__Live:__ [rudil24.github.io/pdf-audio-reader](https://rudil24.github.io/pdf-audio-reader)
+
 A static web app that reads PDF files aloud using the browser's built-in Web Speech API. No backend, no API keys, no install — runs entirely in the browser and deploys to GitHub Pages.
 
 ---
@@ -24,7 +26,7 @@ A static web app that reads PDF files aloud using the browser's built-in Web Spe
 ## Browser Support
 
 | Browser | Status |
-|---|---|
+| --- | --- |
 | Chrome (desktop) | Full support |
 | Firefox (desktop) | Full support |
 | Safari (desktop) | Full support |

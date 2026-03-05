@@ -20,6 +20,7 @@ const voiceSelect  = document.getElementById('voiceSelect');
 const canvas       = document.getElementById('pdfCanvas');
 const ctx          = canvas.getContext('2d');
 const emptyState   = document.getElementById('emptyState');
+const errorState   = document.getElementById('errorState');
 const pageCounter  = document.getElementById('pageCounter');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const nextPageBtn  = document.getElementById('nextPageBtn');
@@ -54,11 +55,21 @@ fileInput.addEventListener('change', async e => {
   const file = e.target.files[0];
   if (!file) return;
 
-  stopTTS();
-  textCache[0] = undefined; // clear cache on new file
+  // Reset input so re-selecting the same file fires change again
+  fileInput.value = '';
 
-  const buffer = await file.arrayBuffer();
-  pdfDoc      = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
+  stopTTS();
+  Object.keys(textCache).forEach(k => delete textCache[k]);
+  hideError();
+
+  try {
+    const buffer = await file.arrayBuffer();
+    pdfDoc      = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
+  } catch {
+    showError('Could not load PDF. The file may be corrupted or password-protected.');
+    return;
+  }
+
   totalPages  = pdfDoc.numPages;
   currentPage = 1;
 
@@ -83,18 +94,22 @@ async function renderPage(pageNum) {
 
 // ─── Text Extraction ──────────────────────────────────────────────────────────
 async function extractPageText(pageNum) {
-  if (textCache[pageNum]) return textCache[pageNum];
+  if (textCache[pageNum] !== undefined) return textCache[pageNum];
 
-  const page    = await pdfDoc.getPage(pageNum);
-  const content = await page.getTextContent();
-  const text    = content.items
-    .map(item => item.str)
-    .join(' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  textCache[pageNum] = text;
-  return text;
+  try {
+    const page    = await pdfDoc.getPage(pageNum);
+    const content = await page.getTextContent();
+    const text    = content.items
+      .map(item => item.str)
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    textCache[pageNum] = text;
+    return text;
+  } catch {
+    textCache[pageNum] = ''; // treat failed extraction as empty page
+    return '';
+  }
 }
 
 // ─── Text Chunker ─────────────────────────────────────────────────────────────
@@ -130,14 +145,16 @@ async function playPage(pageNum) {
   const text = await extractPageText(pageNum);
 
   if (!text) {
-    // Skip empty pages
-    if (currentPage < totalPages) {
-      currentPage++;
+    // Skip empty/unreadable pages
+    if (pageNum < totalPages) {
+      currentPage = pageNum + 1;
       updateCounter();
       await renderPage(currentPage);
       await playPage(currentPage);
     } else {
+      // All pages empty (scanned/image PDF)
       stopTTS();
+      showError('No readable text found. This PDF may be a scanned image.');
     }
     return;
   }
@@ -258,7 +275,19 @@ voiceSelect.addEventListener('change', async () => {
 // ─── UI Helpers ───────────────────────────────────────────────────────────────
 function showCanvas() {
   emptyState.style.display = 'none';
+  errorState.style.display = 'none';
   canvas.style.display     = 'block';
+}
+
+function showError(msg) {
+  emptyState.style.display = 'none';
+  canvas.style.display     = 'none';
+  errorState.textContent   = msg;
+  errorState.style.display = 'block';
+}
+
+function hideError() {
+  errorState.style.display = 'none';
 }
 
 function updateCounter() {

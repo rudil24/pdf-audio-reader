@@ -107,6 +107,13 @@ main {
   font-size: 0.95rem;
 }
 
+#errorState {
+  color: #e07070;
+  font-size: 0.9rem;
+  padding: 16px;
+  text-align: center;
+}
+
 #pdfCanvas {
   display: block;
   max-width: 100%;

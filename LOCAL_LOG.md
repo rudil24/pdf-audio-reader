@@ -37,7 +37,7 @@ __Started:__ 2026-03-04
 
 ## Stage 2 — Development (2026-03-04)
 
-### Files Created
+### Files Built
 
 - `index.html` — base structure, PDF.js CDN, layout
 - `style.css` — dark theme, single-column, toolbar + viewer + controls
@@ -56,6 +56,20 @@ __Started:__ 2026-03-04
 
 ---
 
-## Stage 3 — Deployment (pending)
+## Stage 3 — Deployment & Retro (2026-03-05)
 
-_To be filled in after GitHub Pages deploy._
+### Deployment
+
+- GitHub repo created: [github.com/rudil24/pdf-audio-reader](https://github.com/rudil24/pdf-audio-reader)
+- GitHub Pages enabled: [rudil24.github.io/pdf-audio-reader](https://rudil24.github.io/pdf-audio-reader)
+- 3 commits: scaffold → Vera QA bug fixes → docs
+
+### Retro
+
+- Product Owner sign-off received. Rated project positively.
+- 8 learnings extracted. Key ones: Chrome keepalive pattern, utterance chunking, PDF.js HTTP requirement, pre-deploy audit gate, research-as-artifact process.
+- Retro files: `.agents/retros/2026-03-05-pdf-audio-reader.md`
+- Learnings file: `.agents/learnings/2026-03-05-pdf-audio-reader.md`
+- TASK_LIST.md: all MVP tasks checked off. Stretch goals (highlight layer, URL input) deferred to v0.2.0.
+
+### Project Status: COMPLETE (v0.1.0)
